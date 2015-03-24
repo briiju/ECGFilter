@@ -15,7 +15,7 @@ int i;
 int prevMillis = 0;
 int sensorValue;
 int LEDpin = 13;
-boolean blink = false;
+boolean blinkBool = false;
 boolean SDInitSuccess = true;
 File myFile;
 qrs_filter filter = qrs_filter();
@@ -58,13 +58,13 @@ void setup()
   } else {
     // if the file didn't open, print an error and blink LED
     //Serial.println("error opening CardioCheckData.txt");
-    blink = true;
+    blinkBool = true;
   }
 }
 
 void loop()
 {
-  if (blink)
+  if (blinkBool)
   {
     while ((millis() - prevMillis) < 500)
     {
