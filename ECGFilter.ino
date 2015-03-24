@@ -42,11 +42,7 @@ void setup()
     {
       sensorValue = analogRead(A0);
       return_value result = filter.step(sensorValue);
-      //myFile.println(millis());
-      //This is how they pull respiration phase from the result
-      //I need to find out how to get the filtered value as well
-      Serial.print(result.signal_value);
-      //myFile.println(analogRead(0));
+      myFile.println(result.signal_value);
     }
     // close the file:
     myFile.close();
