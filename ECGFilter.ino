@@ -31,7 +31,6 @@ void setup()
   if (!SD.begin(10)) {
     SDInitSuccess = false;
     //Serial.println("SD card Not initialized");
-    return;
   }
   //Serial.println("SD initialization success");
   
@@ -39,7 +38,7 @@ void setup()
   myFile = SD.open("CardioCheckData.txt", FILE_WRITE);
 
   // if the file opened okay, write to it:
-  if (myFile) {
+  if (myFile && SDInitSuccess) {
     //Serial.print("File created successfully. Writing analog info");
     
     for (i = 0; i <= 1000; i++)
@@ -47,10 +46,10 @@ void setup()
       while ((millis() - prevMillis) < 5)
       {
       }
+      prevMillis = millis();
       sensorValue = analogRead(A0);
       return_value result = filter.step(sensorValue);
       myFile.println(result.signal_value);
-      prevMillis = millis();
     }
     // close the file:
     myFile.close();
