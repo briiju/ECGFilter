@@ -44,7 +44,7 @@ void setup()
     
     for (i = 0; i <= 1000; i++)
     {
-      while ((prevMillis - millis()) < 5)
+      while ((millis() - prevMillis) < 5)
       {
       }
       sensorValue = analogRead(A0);
@@ -66,15 +66,11 @@ void loop()
 {
   if (blink)
   {
-    while ((prevMillis - millis()) < 5)
+    while ((millis() - prevMillis) < 5)
     {
     }
-    if (digitalRead(LEDpin))
-    {
-      digitalWrite(LEDpin, LOW);
-    } else {
-      digitalWrite(LEDpin, LOW);
-    }
+    digitalWrite(LEDpin, !digitalRead(LEDpin)); 
+    prevMillis = millis();
   } else {
     digitalWrite(LEDpin, HIGH); 
   }
