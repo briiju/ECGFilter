@@ -15,7 +15,7 @@ int i;
 int sensorValue;
 boolean SDInitSuccess = true;
 File myFile;
-qrs_filter filter = qrs_filter();
+bandpass_filter filter = bandpass_filter();
 
 void setup()
 {
@@ -41,11 +41,11 @@ void setup()
     for (i = 0; i <= 1000; i++)
     {
       sensorValue = analogRead(A0);
-      return_value result = filter.step(sensorValue);
-      myFile.println(millis());
+      int result = filter.step(sensorValue);
+      //myFile.println(millis());
       //This is how they pull respiration phase from the result
       //I need to find out how to get the filtered value as well
-      //Serial.print(result.respiration_phase, BYTE);
+      Serial.print(result, BYTE);
       //myFile.println(analogRead(0));
     }
     // close the file:
