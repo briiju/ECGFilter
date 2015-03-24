@@ -33,7 +33,7 @@ void setup()
   //Serial.println("SD initialization success");
   
   //creating and opening file
-  myFile = SD.open("test.txt", FILE_WRITE);
+  myFile = SD.open("CardioCheckData.txt", FILE_WRITE);
 
   // if the file opened okay, write to it:
   if (myFile) {
@@ -43,6 +43,9 @@ void setup()
       sensorValue = analogRead(A0);
       return_value result = filter.step(sensorValue);
       myFile.println(millis());
+      //This is how they pull respiration phase from the result
+      //I need to find out how to get the filtered value as well
+      //Serial.print(result.respiration_phase, BYTE);
       //myFile.println(analogRead(0));
     }
     // close the file:
