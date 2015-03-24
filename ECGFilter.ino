@@ -66,7 +66,7 @@ void loop()
 {
   if (blink)
   {
-    while ((millis() - prevMillis) < 5)
+    while ((millis() - prevMillis) < 500)
     {
     }
     digitalWrite(LEDpin, !digitalRead(LEDpin)); 
