@@ -12,7 +12,10 @@
 #include <ECGFilters.h>
 
 int i;
+int prevMillis = 0;
 int sensorValue;
+int LEDpin = 13;
+boolean blink = false;
 boolean SDInitSuccess = true;
 File myFile;
 qrs_filter filter = qrs_filter();
@@ -21,7 +24,7 @@ void setup()
 {
   // Open serial communications and wait for port to open: use for debug purposes
   //Serial.begin(115200);
-  
+  pinMode(LEDpin, OUTPUT);
   pinMode(10, OUTPUT);
   digitalWrite(10, HIGH);
   //Serial.println("Initializing SD Card");
@@ -38,24 +41,44 @@ void setup()
   // if the file opened okay, write to it:
   if (myFile) {
     //Serial.print("File created successfully. Writing analog info");
+    
     for (i = 0; i <= 1000; i++)
     {
+      while ((prevMillis - millis()) < 5)
+      {
+      }
       sensorValue = analogRead(A0);
       return_value result = filter.step(sensorValue);
       myFile.println(result.signal_value);
+      prevMillis = millis();
     }
     // close the file:
     myFile.close();
     //Serial.println("done writing to file");
   } else {
-    // if the file didn't open, print an error:
+    // if the file didn't open, print an error and blink LED
     //Serial.println("error opening CardioCheckData.txt");
+    blink = true;
   }
 }
 
 void loop()
 {
-  // nothing happens after setup
+  if (blink)
+  {
+    while ((prevMillis - millis()) < 5)
+    {
+    }
+    if (digitalRead(LEDpin))
+    {
+      digitalWrite(LEDpin, LOW);
+    } else {
+      digitalWrite(LEDpin, LOW);
+    }
+  } else {
+    digitalWrite(LEDpin, HIGH); 
+  }
+  
 }
 
 
